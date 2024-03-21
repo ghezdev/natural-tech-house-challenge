@@ -8,10 +8,9 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../../components/ui/pagination";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
+} from "@/components/ui/pagination";
 import { usePathname, useSearchParams } from "next/navigation";
+import { arrayRange } from "@/lib/utils";
 
 type Props = {
   maxPage: number | string;
@@ -32,23 +31,46 @@ export default function PaginationPokemon({ maxPage }: Props) {
   return (
     <Pagination className="pb-8">
       <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href={createPageURL(currentPage - 1)} />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href={createPageURL(1)}>1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href={createPageURL(maxPage)}>
-            {maxPage}
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href={createPageURL(currentPage + 1)} />
-        </PaginationItem>
+        {currentPage - 1 > 0 && (
+          <PaginationItem>
+            <PaginationPrevious href={createPageURL(currentPage - 1)} />
+          </PaginationItem>
+        )}
+        {currentPage - 2 >= 2 && (
+          <PaginationItem>
+            <PaginationLink href={createPageURL(1)}>1</PaginationLink>
+          </PaginationItem>
+        )}
+        {currentPage - 2 > 2 && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+        {arrayRange(
+          currentPage - 2 > 0 ? currentPage - 2 : 1,
+          currentPage + 2 < Number(maxPage) ? currentPage + 2 : Number(maxPage)
+        ).map((value) => (
+          <PaginationItem key={`pagination-item-${value}`}>
+            <PaginationLink href={createPageURL(value)}>{value}</PaginationLink>
+          </PaginationItem>
+        ))}
+        {currentPage + 2 < Number(maxPage) - 1 && (
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+        )}
+        {currentPage + 2 < Number(maxPage) && (
+          <PaginationItem>
+            <PaginationLink href={createPageURL(maxPage)}>
+              {maxPage}
+            </PaginationLink>
+          </PaginationItem>
+        )}
+        {currentPage < Number(maxPage) && (
+          <PaginationItem>
+            <PaginationNext href={createPageURL(currentPage + 1)} />
+          </PaginationItem>
+        )}
       </PaginationContent>
     </Pagination>
   );

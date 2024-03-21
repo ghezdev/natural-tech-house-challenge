@@ -1,21 +1,16 @@
 import Image from "next/image";
 import React from "react";
-import { makeStore } from "../../../lib/store";
+import { makeStore } from "@/lib/store";
 import {
   getAllPokemon,
   getPokemonByName,
-} from "../../../lib/features/pokemon/pokemonSlice";
-import { Badge } from "../../../components/ui/badge";
-import { Separator } from "../../../components/ui/separator";
-import { ICONS_STAT } from "../../../lib/const";
-import { Button } from "../../../components/ui/button";
+} from "@/lib/features/pokemon/pokemonSlice";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { ICONS_STAT } from "@/lib/const";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-const arrayRange = (start: number, stop: number, step = 1) =>
-  Array.from(
-    { length: (stop - start) / step + 1 },
-    (value, index) => start + index * step
-  );
+import { arrayRange } from "@/lib/utils";
 
 export async function generateStaticParams() {
   const store = makeStore();
@@ -44,22 +39,6 @@ export async function generateStaticParams() {
   ];
 
   return pokemonsPaginated.map(({ name }) => ({ pokemon: name }));
-
-  //   const pokemonsDetailed = await Promise.all(
-  //     pokemonsPaginated.map(async ({ name }) => {
-  //       const { data: pokemonByName } = await store.dispatch(
-  //         getPokemonByName.initiate(name)
-  //       );
-
-  //       if (!pokemonByName) throw new Error("No pokemons");
-
-  //       return pokemonByName;
-  //     })
-  //   );
-
-  //   console.log("pokemonsDetailed", pokemonsDetailed);
-
-  //   return pokemonsDetailed;
 }
 
 async function getPokemonByPokemonName(name: string) {

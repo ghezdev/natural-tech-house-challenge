@@ -16,8 +16,13 @@ function PokemonCard({ pokemon }: Props) {
       <Card className="hover:scale-105 transition-all">
         <CardHeader>
           <Image
-            src={pokemon.image}
-            className="mx-auto"
+            src={
+              pokemon.image ||
+              "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+            }
+            className={`mx-auto ${
+              pokemon.image === null && "brightness-0 dark:invert"
+            }`}
             width={100}
             height={100}
             alt={`${pokemon.name} image`}

@@ -1,34 +1,35 @@
 "use client";
-import React, { useState } from "react";
-import { Label } from "../../components/ui/label";
+import React from "react";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
-import { Button } from "../../components/ui/button";
-import { Separator } from "../../components/ui/separator";
-import { Badge } from "../../components/ui/badge";
-import { TYPES_POKEMON } from "../../lib/const";
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { TYPES_POKEMON } from "@/lib/const";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 type Props = {};
+
+const TYPE_PARAM = "type";
 
 export default function TypePokemon({}: Props) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const typeParam = searchParams.get("type")?.toString() || undefined;
-  console.log(typeParam);
+  const typeParam = searchParams.get(TYPE_PARAM)?.toString() || undefined;
 
   const handleSelectType = (type: string) => {
     const params = new URLSearchParams(searchParams);
 
-    params.set("type", type);
+    params.set(TYPE_PARAM, type);
 
     replace(`${pathname}?${params.toString()}`);
   };
@@ -36,8 +37,8 @@ export default function TypePokemon({}: Props) {
   const clearSelect = () => {
     const params = new URLSearchParams(searchParams);
 
-    if (params.get("type")) {
-      params.delete("type");
+    if (params.get(TYPE_PARAM)) {
+      params.delete(TYPE_PARAM);
 
       return `${pathname}?${params.toString()}`;
     }

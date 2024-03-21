@@ -8,7 +8,6 @@ import { useDebounceCallback } from "usehooks-ts";
 type Props = {};
 
 const NAME_PARAM = "name";
-const PAGE_PARAM = "page";
 
 export default function SearchPokemon({}: Props) {
   const searchParams = useSearchParams();
@@ -19,7 +18,6 @@ export default function SearchPokemon({}: Props) {
 
   const handleSearch = useDebounceCallback((term: string) => {
     const params = new URLSearchParams(searchParams);
-    // params.set(PAGE_PARAM, "1");
 
     if (term) {
       params.set(NAME_PARAM, term);

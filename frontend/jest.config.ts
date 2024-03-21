@@ -12,7 +12,7 @@ const config: Config = {
   coverageProvider: "v8",
   testEnvironment: "jsdom",
   automock: false,
-  setupFiles: ["./src/setupJest.ts"],
+  setupFiles: ["./jest.setup.ts"],
   testMatch: ["**/?(*.)+(spec|test).[jt]s?(x)"],
 
   // Add more setup options before each test is run

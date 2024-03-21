@@ -21,7 +21,7 @@ function DetailPokemonDialog({ pokemonName }: Props) {
     isLoading,
     isError,
     isSuccess,
-  } = useGetPokemonByNameQuery(pokemonName);
+  } = useGetPokemonByNameQuery(pokemonName, {});
 
   if (isLoading)
     return (
